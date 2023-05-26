@@ -1,0 +1,65 @@
+class Node:
+    def __init__(self, function):
+        self.function = function
+        self.children = []
+
+
+def execute(node, number):
+    result = node.function(number)
+    execution_queue = []
+    execution_queue.extend(node.children)
+    while execution_queue:
+        current_node = execution_queue.pop(0)
+        result = current_node.function(result)
+        execution_queue.extend(current_node.children)
+    return result
+
+
+def increment(number):
+    return number + 1
+
+
+def square(number):
+    return number * number
+
+
+def change_sign(number):
+    return -number
+
+
+def half(number):
+    return number//2
+
+
+def absolute(number):
+    return abs(number)
+
+
+def minus_five(number):
+    return number - 5
+
+
+def multiply_by_five(number):
+    return number * 5
+
+
+def decrement(number):
+    return number - 1
+
+root = Node(increment)
+child0 = Node(square)
+child1 = Node(change_sign)
+child2 = Node(half)
+root.children.append(child0)
+root.children.append(child1)
+root.children.append(child2)
+child0_0 = Node(absolute)
+child1.children.append(child0_0)
+child1_0 = Node(minus_five)
+child1_1 = Node(multiply_by_five)
+child1.children.append(child1_0)
+child1.children.append(child1_1)
+child2_0 = Node(decrement)
+child2.children.append(child2_0)
+
+print(execute(root, 3))
